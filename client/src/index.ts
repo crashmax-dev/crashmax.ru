@@ -1,0 +1,219 @@
+import { el } from 'redom'
+import { Matrix } from '@crashmax/canvas-matrix2d'
+
+const contacts = document.getElementById('contacts')!
+const life = document.getElementById('life')!
+const load = document.getElementById('load')!
+const time = document.getElementById('time')!
+const date = document.getElementById('date')!
+life.textContent = lifeTime()
+load.textContent = loadAvg()
+fetchTerminal()
+
+setInterval(() => {
+  const { hm, hms } = currentTime()
+  time.textContent = hms
+  date.textContent = hm
+}, 1000)
+
+const matrix = document.getElementById('matrix')!
+const terminal = document.getElementById('terminal')!
+const terminalHeader = document.getElementById('move_header')!
+const shortcut = document.getElementById('shortcut')!
+// const close = document.getElementById('close')!
+const min = document.getElementById('min')!
+const ovx = document.getElementById('ovx')!
+
+const state = {
+  opened: false, // o
+  offsetWidth: terminal.offsetWidth, // p
+  offsetHeight: terminal.offsetHeight, // q
+  offsetLeft: terminal.offsetLeft,
+  offsetTop: terminal.offsetTop,
+  yPos: 0,
+  xPos: 0
+}
+
+shortcut.addEventListener('click', () => {
+  terminal.style.display = ''
+  shortcut.style.display = 'none'
+  state.offsetLeft = terminal.offsetLeft
+  state.offsetTop = terminal.offsetTop
+  state.yPos = 0
+  state.xPos = 0
+  state.opened = true
+})
+
+min.addEventListener('click', () => {
+  terminal.style.display = 'none'
+  shortcut.style.display = ''
+})
+
+ovx.addEventListener('click', () => {
+  if (state.opened) {
+    state.offsetWidth = terminal.offsetWidth
+    state.offsetHeight = terminal.offsetHeight
+    terminalHeader.style.width = 'inherit'
+    terminal.style.width = 'auto'
+    terminal.style.height = 'auto'
+    terminal.style.maxWidth = window.outerWidth + 'px'
+    terminal.style.maxHeight = window.outerHeight + 'px'
+    terminal.style.margin = '0'
+    terminal.style.top = '0'
+    terminal.style.left = '0'
+    terminal.style.right = '0'
+    terminal.style.bottom = '0'
+    terminal.style.position = 'absolute'
+    state.opened = false
+    ovx.title = 'В оконный режим'
+  } else {
+    terminalHeader.style.width = state.offsetWidth - 5 + 'px'
+    terminal.style.width = state.offsetWidth + 'px'
+    terminal.style.height = state.offsetHeight + 'px'
+    terminal.style.maxWidth = state.offsetWidth + 'px'
+    terminal.style.maxHeight = state.offsetHeight + 'px'
+    terminal.style.top = '0'
+    terminal.style.left = '0'
+    terminal.style.right = ''
+    terminal.style.bottom = ''
+    state.opened = true
+    ovx.title = 'Во весь экран'
+  }
+
+  state.offsetLeft = 0
+  state.offsetTop = 0
+  state.yPos = 0
+  state.xPos = 0
+})
+
+terminalHeader.addEventListener('mousedown', (event) => {
+  terminalHeader.style.cursor = 'move'
+  state.yPos = event.pageY - state.offsetTop
+  state.xPos = event.pageX - state.offsetLeft
+
+  document.addEventListener('mousemove', terminalMove)
+})
+
+document.addEventListener('mouseup', () => {
+  document.removeEventListener('mousemove', terminalMove)
+  terminalHeader.style.cursor = ''
+  state.offsetLeft = terminal.offsetLeft
+  state.offsetTop = terminal.offsetTop
+})
+
+window.addEventListener('resize', () => {
+  if (state.opened) {
+    terminal.style.maxWidth = window.innerWidth + 'px'
+    terminal.style.maxHeight = window.innerHeight + 'px'
+  }
+})
+
+new Matrix(matrix, {
+  font: {
+    family: 'Matrix',
+    file: 'matrix.regular.ttf',
+    size: 12
+  }
+}).start()
+
+function rmrf() {
+  const pointer = el('span', {
+    style: {
+      backgroundColor: '#f5f5f5',
+      color: '#f5f5f5'
+    }
+  }, 'A')
+
+  document.body.style.userSelect = 'none'
+  document.body.style.backgroundColor = '#000000'
+  document.body.style.color = '#f5f5f5'
+  document.body.style.padding = '10px'
+
+  setInterval(() => {
+    pointer.style.visibility = pointer.style.visibility === 'hidden'
+      ? 'visible'
+      : 'hidden'
+  }, 500)
+
+  document.body.innerHTML = 'Fatal error: file system check failed.<br />Please, reboot now '
+  document.body.appendChild(pointer)
+}
+
+function currentTime() {
+  const date = new Date()
+  let h: string | number = date.getHours()
+  let m: string | number = date.getMinutes()
+  let s: string | number = date.getSeconds()
+
+  if (h <= 9) h = '0' + h
+  if (m <= 9) m = '0' + m
+  if (s <= 9) s = '0' + s
+
+  const hms = h + ':' + m + ':' + s
+  const hm = h + ':' + m
+
+  return {
+    hms: hms,
+    hm: hm
+  }
+}
+
+function lifeTime() {
+  const a = new Date('December 19, 2015'),
+    b = new Date,
+    c = Math.round((b.getTime() - a.getTime()) / 864e5),
+    d = ['day', 'days', 'days'],
+    e = [2, 0, 1, 1, 1, 2],
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    f = d[c % 100 > 4 && c % 100 < 20 ? 2 : e[c % 10 < 5 ? c % 10 : 5]]
+  return (c > 0 ? c + ' ' + f + '' : '')
+}
+
+function randInt(a: number, b: number) {
+  return Math.round(Math.random() * (b - a)) + a
+}
+
+function loadAvg() {
+  return '0.0' + randInt(0, 3) + ', 0.0' + randInt(1, 5) + ', 0.0' + randInt(3, 9)
+}
+
+function terminalMove(event: MouseEvent) {
+  if (state.opened) {
+    terminal.style.margin = '0px'
+    terminal.style.top = event.pageY - state.yPos + 'px'
+    terminal.style.left = event.pageX - state.xPos + 'px'
+  }
+}
+
+interface IResponse {
+  contacts: {
+    title: string
+    href: string
+    target: string
+  }[]
+}
+
+async function fetchTerminal() {
+  const response = await fetch('/api/terminal')
+  const data = await response.json() as IResponse
+
+  for (const contact of data.contacts) {
+    const tr = el('tr', {
+      className: 'list_item'
+    })
+
+    const td = el('td', [
+      el('div', {
+        className: `ico ico-${contact.title.toLowerCase()}_16`
+      }),
+      el('a', {
+        href: contact.href,
+        className: 'selected',
+        target: contact.target
+      }, contact.title)
+    ])
+
+    tr.appendChild(td)
+    contacts.appendChild(tr)
+  }
+}

@@ -21,7 +21,9 @@
   },
   "scripts": {
     "start": "npm run build && cross-env NODE_ENV=production node dist/index.js",
-    "dev": "tsc-watch --compiler typescript/bin/tsc -p tsconfig.build.json --onSuccess \"cross-env NODE_ENV=development node -r tsconfig-paths/register --inspect dist/index.js\"",
+    "dev": "concurrently -n client,server \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:server": "tsc-watch --compiler typescript/bin/tsc -p tsconfig.build.json --onSuccess \"cross-env NODE_ENV=development node -r tsconfig-paths/register --inspect dist/index.js\"",
+    "dev:client": "cd client && npm run watch",
     "build": "tsc -p tsconfig.build.json",
     "test": "ava",
     "test:watch": "ava --watch",

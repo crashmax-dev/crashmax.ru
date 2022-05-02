@@ -1,4 +1,5 @@
 import 'dotenv/config'
+import os from 'node:os'
 import fastify from 'fastify'
 import fastifyMySQL from '@fastify/mysql'
 import fastifyStatis from '@fastify/static'
@@ -25,12 +26,15 @@ server.get('/', (_, res) => {
 })
 
 server.get('/api/terminal', async (_, res) => {
+  const terminal = {
+    loadavg: os.loadavg()
+  }
   const connection = await server.mysql.getConnection()
-  const [response] = await connection.query(
+  const [contacts] = await connection.query(
     'SELECT title, href, target FROM terminal WHERE status != 0'
   )
   connection.release()
-  res.send(response)
+  res.send({ contacts, terminal })
 })
 
 server.listen(APP_PORT, APP_IP, (err, address) => {
