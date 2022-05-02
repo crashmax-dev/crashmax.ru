@@ -1,15 +1,28 @@
 import 'dotenv/config'
+import fastify from 'fastify'
+import fastifyMySQL from '@fastify/mysql'
+import fastifyStatis from '@fastify/static'
+import { join, dirname } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-export default class FooBar {
-  #foo: string
-  #bar: number
+const server = fastify()
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const { APP_IP, APP_PORT, MYSQL_URI } = process.env
 
-  constructor(foo: string, bar: number) {
-    this.#foo = foo
-    this.#bar = bar
-  }
+server.register(fastifyMySQL, {
+  promise: true,
+  uri: MYSQL_URI
+})
 
-  get foobar(): string {
-    return `${this.#foo} ${this.#bar}`
-  }
-}
+server.register(fastifyStatis, {
+  root: join(__dirname, '../client/dist')
+})
+
+server.get('/', (_, res) => {
+  res.sendFile('/index.html')
+})
+
+server.listen(APP_PORT, APP_IP, (err, address) => {
+  if (err) throw err
+  console.log(`Server running at ${address}`)
+})
