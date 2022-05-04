@@ -32,7 +32,8 @@
     "prebuild": "del-cli dist",
     "prepare": "husky install",
     "prepublishOnly": "npm run build",
-    "mysql": "cd scripts && mysql-tunnel.sh"
+    "mysql": "cd scripts && mysql-tunnel.sh",
+    "deploy": "node scripts/deploy.js"
   },
   "devDependencies": {
     "@crashmax/eslint-config": "^1.1.0",
@@ -41,6 +42,7 @@
     "ava": "^4.1.0",
     "cross-env": "^7.0.3",
     "del-cli": "^4.0.1",
+    "deploy-toolkit": "^0.1.1",
     "husky": "^7.0.4",
     "ts-node": "^10.7.0",
     "tsc-watch": "^4.6.2",
