@@ -1,24 +1,26 @@
 import 'dotenv/config'
 import os from 'node:os'
+import mysql from 'mysql2/promise'
 import fastify from 'fastify'
-import fastifyMySQL from '@fastify/mysql'
 import fastifyStatis from '@fastify/static'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-const server = fastify()
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const { APP_IP, APP_PORT, MYSQL_URI } = process.env
+const { APP_IP, APP_PORT, DBNAME, DBPASS, DBUSER, NODE_ENV } = process.env
+
+const server = fastify()
+const db = await mysql.createConnection({
+  user: DBUSER,
+  password: DBPASS,
+  database: DBNAME,
+  socketPath: NODE_ENV === 'production'
+    ? '/var/run/mysqld/mysqld.sock'
+    : undefined
+})
 
 server.register(fastifyStatis, {
   root: join(__dirname, '../client/dist')
-})
-
-server.register(fastifyMySQL, {
-  type: 'pool',
-  promise: true,
-  connectionLimit: 2,
-  connectionString: MYSQL_URI
 })
 
 server.get('/', (_, res) => {
@@ -27,13 +29,14 @@ server.get('/', (_, res) => {
 
 server.get('/api/terminal', async (_, res) => {
   const terminal = {
-    loadavg: os.loadavg()
+    loadavg: os.loadavg(),
+    uptime: os.uptime()
   }
-  const connection = await server.mysql.getConnection()
-  const [contacts] = await connection.query(
+
+  const [contacts] = await db.query(
     'SELECT title, href, target FROM terminal WHERE status != 0'
   )
-  connection.release()
+
   res.send({ contacts, terminal })
 })
 
