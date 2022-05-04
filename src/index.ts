@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 const { APP_IP, APP_PORT, DBNAME, DBPASS, DBUSER, NODE_ENV } = process.env
 
 const server = fastify()
-const db = await mysql.createConnection({
+const db = mysql.createPool({
   user: DBUSER,
   password: DBPASS,
   database: DBNAME,
