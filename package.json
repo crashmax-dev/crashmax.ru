@@ -1,7 +1,7 @@
 {
-  "name": "crashmax.ru-server",
+  "name": "crashmax.ru",
   "version": "1.0.0",
-  "description": "crashmax.ru-server",
+  "description": "crashmax.ru",
   "type": "module",
   "exports": "./dist/index.js",
   "types": "dist",
@@ -11,13 +11,13 @@
   ],
   "keywords": [],
   "license": "MIT",
-  "homepage": "https://github.com/crashmax-dev/crashmax.ru-server#readme",
+  "homepage": "https://github.com/crashmax-dev/crashmax.ru#readme",
   "bugs": {
-    "url": "https://github.com/crashmax-dev/crashmax.ru-server/issues"
+    "url": "https://github.com/crashmax-dev/crashmax.ru/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/crashmax-dev/crashmax.ru-server.git"
+    "url": "git+https://github.com/crashmax-dev/crashmax.ru.git"
   },
   "scripts": {
     "start": "npm run build && cross-env NODE_ENV=production node dist/index.js",
@@ -33,7 +33,7 @@
     "prepare": "husky install",
     "prepublishOnly": "npm run build",
     "mysql": "cd scripts && mysql-tunnel.sh",
-    "deploy": "node scripts/deploy.js"
+    "deploy": "npm run build && node scripts/deploy.js"
   },
   "devDependencies": {
     "@crashmax/eslint-config": "^1.1.0",

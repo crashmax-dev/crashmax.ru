@@ -1,1 +1,1 @@
-# crashmax.ru-server
+# crashmax.ru
