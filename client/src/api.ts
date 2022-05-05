@@ -7,6 +7,7 @@ export interface Contacts {
 export interface Terminal {
   loadavg: number[]
   uptime: number
+  online: number
 }
 
 export interface ApiResponse {

@@ -1,6 +1,6 @@
 import { el } from 'redom'
 import { Matrix } from '@crashmax/canvas-matrix2d'
-import { currentTime, lifeDate } from './utils'
+import { currentTime, declOfNum, lifeDate } from './utils'
 import { fetchTerminal } from './api'
 
 const contacts = document.getElementById('contacts')!
@@ -8,12 +8,11 @@ const life = document.getElementById('life')!
 const load = document.getElementById('load')!
 const time = document.getElementById('time')!
 const date = document.getElementById('date')!
-
+const online = document.getElementById('online')!
 const matrix = document.getElementById('matrix')!
 const terminal = document.getElementById('terminal')!
 const terminalHeader = document.getElementById('move_header')!
 const shortcut = document.getElementById('shortcut')!
-// const close = document.getElementById('close')!
 const min = document.getElementById('min')!
 const ovx = document.getElementById('ovx')!
 
@@ -30,6 +29,7 @@ const state = {
 async function main() {
   const res = await fetchTerminal()
 
+  online.textContent = `${res.terminal.online} ${declOfNum(res.terminal.online, ['user', 'users', 'users'])}`
   load.textContent = res.terminal.loadavg.join(', ')
   life.textContent = lifeDate()
 
@@ -53,14 +53,17 @@ async function main() {
     contacts.appendChild(tr)
   }
 
-  setInterval(() => {
-    const { hm, hms } = currentTime()
-    time.textContent = hms
-    date.textContent = hm
-  }, 1000)
+  setInterval(() => renderTime(), 1000)
 }
 
+renderTime()
 main()
+
+function renderTime() {
+  const { hm, hms } = currentTime()
+  time.textContent = hms
+  date.textContent = hm
+}
 
 function terminalMove(event: MouseEvent) {
   if (state.opened) {
