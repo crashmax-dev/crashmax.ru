@@ -17,22 +17,17 @@ const config = {
     {
       type: 'cmd',
       args: ['rm', '-rf', 'dist'],
-      cwd: 'crashmax.ru/app/'
-    },
-    {
-      type: 'cmd',
-      args: ['rm', '-rf', 'dist'],
       cwd: 'crashmax.ru/app/client/'
     },
     {
       type: 'upload',
-      src: join(__dirname, '../dist'),
-      dest: 'crashmax.ru/app/dist/'
+      src: join(__dirname, '../dist/'),
+      dest: 'crashmax.ru/app/dist'
     },
     {
       type: 'upload',
-      src: join(__dirname, '../client/dist'),
-      dest: 'crashmax.ru/app/client/dist/'
+      src: join(__dirname, '../client/dist/'),
+      dest: 'crashmax.ru/app/client/dist'
     },
     {
       type: 'cmd',
