@@ -38,18 +38,23 @@ async function main() {
       className: 'list_item'
     })
 
+    const link = el('a', {
+      href: contact.href,
+      className: 'selected',
+      target: contact.target
+    }, contact.title)
+
+    const cloneLink = link.cloneNode(true)
+    cloneLink.textContent = contact.href.replace('https://', '')
+
     const td = el('td', [
       el('div', {
         className: `ico ico-${contact.title.toLowerCase()}_16`
       }),
-      el('a', {
-        href: contact.href,
-        className: 'selected',
-        target: contact.target
-      }, contact.title)
+      link
     ])
 
-    tr.appendChild(td)
+    tr.append(td, el('td', cloneLink))
     contacts.appendChild(tr)
   }
 
