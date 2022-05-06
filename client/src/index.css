@@ -170,6 +170,10 @@ a.pointer {
   text-align: right;
 }
 
+.list_item td:nth-child(2) > span {
+  cursor: pointer;
+}
+
 .selected {
   user-select: text;
 }

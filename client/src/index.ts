@@ -40,8 +40,7 @@ async function main() {
 
     const link = el('a', {
       href: contact.href,
-      className: 'selected',
-      target: contact.target
+      target: '_blank'
     }, contact.title)
 
     const cloneLink = link.cloneNode(true)
@@ -51,10 +50,23 @@ async function main() {
       el('div', {
         className: `ico ico-${contact.title.toLowerCase()}_16`
       }),
-      link
+      contact.target === '_blank'
+        ? link
+        : contact.title
     ])
 
-    tr.append(td, el('td', cloneLink))
+    const td2 = el('td',
+      {
+        onclick: () => {
+          navigator.clipboard.writeText(contact.href)
+        }
+      },
+      contact.target === '_blank'
+        ? cloneLink
+        : el('span', contact.href)
+    )
+
+    tr.append(td, td2)
     contacts.appendChild(tr)
   }
 
