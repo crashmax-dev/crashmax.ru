@@ -5,7 +5,7 @@ interface TerminalSessions {
   timestamp: number
 }
 
-export class TerminalApi {
+export class Terminal {
   private sessions: TerminalSessions[]
   private session_expire = 60 * 1000 * 10 // 10m
 

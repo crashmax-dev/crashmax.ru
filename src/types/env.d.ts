@@ -6,5 +6,10 @@ declare namespace NodeJS {
     DBUSER: string
     DBPASS: string
     DBNAME: string
+    EMAIL_HOST: string
+    EMAIL_PORT: number
+    EMAIL_TOKEN: string
+    EMAIL_USER: string
+    EMAIL_PASS: string
   }
 }
