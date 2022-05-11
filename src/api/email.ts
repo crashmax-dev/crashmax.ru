@@ -18,6 +18,7 @@ export class Mailer {
 
   async send(options: SendOptions): Promise<SMTPTransport.SentMessageInfo> {
     if (process.env.EMAIL_TOKEN === options.token) {
+      delete options.token
       return await this.transporter.sendMail(options)
     }
 
