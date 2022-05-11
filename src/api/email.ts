@@ -2,7 +2,9 @@ import { createTransport } from 'nodemailer'
 import type { Transporter, SendMailOptions } from 'nodemailer'
 import type SMTPTransport from 'nodemailer/lib/smtp-transport'
 
-export type SendOptions = Pick<SendMailOptions, 'to' | 'subject' | 'text'> & { token?: string }
+export type SendOptions = Pick<SendMailOptions, 'to' | 'from' | 'subject' | 'text'> & {
+  token?: string
+}
 
 export class Mailer {
   private transporter: Transporter<SMTPTransport.SentMessageInfo>
@@ -10,8 +12,7 @@ export class Mailer {
   constructor() {
     const { EMAIL_USER, EMAIL_PASS, EMAIL_HOST, EMAIL_PORT } = process.env
     this.transporter = createTransport(
-      `smtp://${EMAIL_USER}:${EMAIL_PASS}@${EMAIL_HOST}:${EMAIL_PORT}`,
-      { from: `crashmax <${process.env.EMAIL_USER}>` }
+      `smtp://${EMAIL_USER}:${EMAIL_PASS}@${EMAIL_HOST}:${EMAIL_PORT}`
     )
   }
 
