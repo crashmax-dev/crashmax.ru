@@ -2,7 +2,6 @@
   "extends": "@sindresorhus/tsconfig/tsconfig.json",
   "compilerOptions": {
     "module": "ESNext",
-    "baseUrl": ".",
     "outDir": "dist",
     "allowJs": true,
     "sourceMap": true,
