@@ -2,7 +2,7 @@ import fp from 'fastify-plugin'
 import mysql from 'mysql2/promise'
 
 declare module 'fastify' {
-  export interface FastifyInstance {
+  interface FastifyInstance {
     db: mysql.Pool
   }
 }
