@@ -30,9 +30,11 @@ server.register(fastifyAutoload, {
   dir: joinPath(import.meta, 'routes')
 })
 
-const { APP_IP, APP_PORT } = process.env
 server.listen(
-  { host: APP_IP, port: APP_PORT },
+  {
+    host: process.env.APP_IP,
+    port: process.env.APP_PORT
+  },
   (err, address) => {
     if (err) throw err
     console.log(`Server running at ${address}`)

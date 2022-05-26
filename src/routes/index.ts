@@ -1,10 +1,9 @@
 import type { FastifyPluginAsync } from 'fastify'
 
-const home: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
-  fastify.get('/', async (request, reply) => {
-    request.terminalSession()
-    return reply.sendFile('/index.html')
+const root: FastifyPluginAsync = async (fastify): Promise<void> => {
+  fastify.get('/healthcheck', (request, reply) => {
+    reply.send({ ok: true })
   })
 }
 
-export default home
+export default root

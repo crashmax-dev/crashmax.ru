@@ -1,8 +1,8 @@
 import type { FastifyPluginAsync } from 'fastify'
 
-const terminal: FastifyPluginAsync = async (fastify, opts): Promise<void> => {
-  fastify.get('/', async (request, reply) => {
-    return reply.terminalApi()
+const terminal: FastifyPluginAsync = async (fastify): Promise<void> => {
+  fastify.get('/', (request, reply) => {
+    return reply.terminal()
   })
 }
 
