@@ -1,11 +1,11 @@
 import 'dotenv/config'
-import fastify from 'fastify'
+import Fastify from 'fastify'
 import fastifyAutoload from '@fastify/autoload'
 import { joinPath } from './utils/path.js'
 import { ajvTypeBoxPlugin } from '@fastify/type-provider-typebox'
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 
-const server = fastify({
+export const fastify = Fastify({
   logger: {
     enabled: process.env.NODE_ENV === 'development',
     transport: {
@@ -22,15 +22,15 @@ const server = fastify({
   }
 }).withTypeProvider<TypeBoxTypeProvider>()
 
-server.register(fastifyAutoload, {
+fastify.register(fastifyAutoload, {
   dir: joinPath(import.meta, 'plugins')
 })
 
-server.register(fastifyAutoload, {
+fastify.register(fastifyAutoload, {
   dir: joinPath(import.meta, 'routes')
 })
 
-server.listen(
+fastify.listen(
   {
     host: process.env.APP_IP,
     port: process.env.APP_PORT

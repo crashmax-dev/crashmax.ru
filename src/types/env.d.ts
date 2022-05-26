@@ -3,13 +3,13 @@ declare namespace NodeJS {
     NODE_ENV: 'development' | 'production'
     APP_PORT: number
     APP_IP: string
-    DBUSER: string
-    DBPASS: string
-    DBNAME: string
+    DB_USER: string
+    DB_PASS: string
+    DB_NAME: string
     EMAIL_HOST: string
     EMAIL_PORT: number
-    EMAIL_TOKEN: string
     EMAIL_USER: string
     EMAIL_PASS: string
+    EMAIL_TOKEN: string
   }
 }

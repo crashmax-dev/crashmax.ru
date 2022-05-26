@@ -8,12 +8,12 @@ declare module 'fastify' {
 }
 
 export default fp(async (fastify) => {
-  const { DBNAME, DBPASS, DBUSER, NODE_ENV } = process.env
+  const { DB_NAME, DB_PASS, DB_USER, NODE_ENV } = process.env
 
   const db = mysql.createPool({
-    user: DBUSER,
-    password: DBPASS,
-    database: DBNAME,
+    user: DB_USER,
+    password: DB_PASS,
+    database: DB_NAME,
     socketPath: NODE_ENV === 'production'
       ? '/var/run/mysqld/mysqld.sock'
       : undefined
