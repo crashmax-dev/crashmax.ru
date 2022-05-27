@@ -3,13 +3,6 @@
   "version": "1.0.0",
   "description": "crashmax.ru",
   "type": "module",
-  "exports": "./dist/index.js",
-  "types": "dist",
-  "files": [
-    "dist",
-    "!dist/**/*.js.map"
-  ],
-  "keywords": [],
   "license": "MIT",
   "homepage": "https://github.com/crashmax-dev/crashmax.ru#readme",
   "bugs": {
@@ -20,9 +13,9 @@
     "url": "git+https://github.com/crashmax-dev/crashmax.ru.git"
   },
   "scripts": {
-    "start": "npm run build && cross-env NODE_ENV=production node dist/index.js",
+    "start": "npm run build && cross-env NODE_ENV=production node dist/app.js",
     "dev": "concurrently --prefix none \"npm run dev:client\" \"npm run dev:server\"",
-    "dev:server": "npm run prebuild && tsc-watch --compiler typescript/bin/tsc -p tsconfig.build.json --onSuccess \"cross-env NODE_ENV=development node -r tsconfig-paths/register --inspect dist/index.js\"",
+    "dev:server": "npm run prebuild && tsc-watch --compiler typescript/bin/tsc -p tsconfig.build.json --onSuccess \"cross-env NODE_ENV=development node -r tsconfig-paths/register --inspect dist/app.js\"",
     "dev:client": "npm run prebuild && cd client && npm run watch",
     "build": "tsc -p tsconfig.build.json && cd client && npm run build",
     "test": "tsc -p tsconfig.build.json && tap --node-arg=--loader=ts-node/esm --node-arg=--no-warnings",
