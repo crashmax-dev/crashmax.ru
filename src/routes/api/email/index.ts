@@ -22,14 +22,14 @@ const routeOptions: RouteShorthandOptions = {
 }
 
 const email: FastifyPluginAsync = async (fastify): Promise<void> => {
-  const { EMAIL_USER, EMAIL_PASS, EMAIL_HOST, EMAIL_PORT } = process.env
+  const { EMAIL_USER, EMAIL_PASS, EMAIL_HOST, EMAIL_PORT } = fastify.config
   const transporter = createTransport(
     `smtp://${EMAIL_USER}:${EMAIL_PASS}@${EMAIL_HOST}:${EMAIL_PORT}`,
     { from: `crashmax.ru <${EMAIL_USER}>` }
   )
 
   fastify.addHook<Request>('preHandler', (request, reply, done) => {
-    if (process.env.EMAIL_TOKEN !== request.body.token) {
+    if (fastify.config.EMAIL_TOKEN !== request.body.token) {
       throw fastify.httpErrors.unauthorized()
     }
 
