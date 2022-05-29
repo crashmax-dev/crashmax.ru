@@ -3,9 +3,7 @@ declare module 'fastify' {
     config: {
       APP_PORT: number
       APP_IP: string
-      DB_USER: string
-      DB_PASS: string
-      DB_NAME: string
+      DATABASE_URL: string
       EMAIL_HOST: string
       EMAIL_PORT: number
       EMAIL_USER: string
@@ -18,9 +16,7 @@ declare module 'fastify' {
 export const envSchema = {
   type: 'object',
   required: [
-    'DB_USER',
-    'DB_PASS',
-    'DB_NAME',
+    'DATABASE_URL',
     'EMAIL_HOST',
     'EMAIL_PORT',
     'EMAIL_USER',
@@ -36,13 +32,7 @@ export const envSchema = {
       type: 'string',
       default: 'localhost'
     },
-    DB_USER: {
-      type: 'string'
-    },
-    DB_PASS: {
-      type: 'string'
-    },
-    DB_NAME: {
+    DATABASE_URL: {
       type: 'string'
     },
     EMAIL_HOST: {

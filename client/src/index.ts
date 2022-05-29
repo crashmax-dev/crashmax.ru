@@ -43,30 +43,14 @@ async function main() {
       target: '_blank'
     }, contact.title)
 
-    const cloneLink = link.cloneNode(true)
-    cloneLink.textContent = contact.href.replace('https://', '')
-
     const td = el('td', [
       el('div', {
         className: `ico ico-${contact.title.toLowerCase()}_16`
       }),
-      contact.target === '_blank'
-        ? link
-        : contact.title
+      link
     ])
 
-    const td2 = el('td',
-      {
-        onclick: () => {
-          navigator.clipboard.writeText(contact.href)
-        }
-      },
-      contact.target === '_blank'
-        ? cloneLink
-        : el('span', contact.href)
-    )
-
-    tr.append(td, td2)
+    tr.appendChild(td)
     contacts.appendChild(tr)
   }
 

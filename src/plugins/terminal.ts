@@ -18,8 +18,7 @@ export default fp(async (fastify) => {
       },
       select: {
         title: true,
-        href: true,
-        target: true
+        href: true
       }
     })
 
