@@ -24,8 +24,8 @@
     "prebuild": "del-cli dist client/dist",
     "prepare": "husky install",
     "prepublishOnly": "npm run build",
-    "mysql": "sh ./scripts/mysql-tunnel.sh",
-    "deploy": "npm run build && node scripts/deploy.js"
+    "deploy": "npm run build && node scripts/deploy.js",
+    "postinstall": "prisma generate"
   },
   "devDependencies": {
     "@crashmax/eslint-config": "^1.1.0",
@@ -40,6 +40,7 @@
     "husky": "^8.0.1",
     "node-ssh": "^12.0.4",
     "pino-pretty": "^7.6.1",
+    "prisma": "^3.14.0",
     "tap": "^16.2.0",
     "ts-node": "^10.8.0",
     "tsc-watch": "^5.0.3",
@@ -55,10 +56,10 @@
     "@fastify/sensible": "^4.1.0",
     "@fastify/static": "^6.2.0",
     "@fastify/type-provider-typebox": "^0.1.0-beta.1",
+    "@prisma/client": "^3.14.0",
     "@sinclair/typebox": "^0.23.5",
     "fastify": "^4.0.0-rc.3",
     "fastify-plugin": "^3.0.1",
-    "mysql2": "^2.3.3",
     "nodemailer": "^6.7.5"
   }
 }

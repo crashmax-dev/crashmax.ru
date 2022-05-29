@@ -12,9 +12,16 @@ export default fp(async (fastify) => {
   const sessionLife = 60 * 1000 * 10 // 10 minutes
 
   fastify.decorateReply('terminal', async function () {
-    const [contacts] = await fastify.db.query(
-      'SELECT title, href, target FROM terminal WHERE status != 0'
-    )
+    const contacts = await fastify.prisma.links.findMany({
+      where: {
+        status: true
+      },
+      select: {
+        title: true,
+        href: true,
+        target: true
+      }
+    })
 
     this.send({
       contacts,
