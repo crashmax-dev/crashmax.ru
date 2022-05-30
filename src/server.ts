@@ -1,4 +1,3 @@
-import 'dotenv/config'
 import Fastify from 'fastify'
 import fastifyEnv from '@fastify/env'
 import fastifyAutoload from '@fastify/autoload'

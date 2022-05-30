@@ -3,13 +3,9 @@ import { buildServer } from './server.js'
 const fastify = buildServer()
 
 try {
-  const address = await fastify.listen(
-    {
-      host: process.env.APP_IP,
-      port: process.env.APP_PORT
-    }
-  )
-
+  const host = process.env.APP_IP ?? 'localhost'
+  const port = process.env.APP_PORT ?? 8000
+  const address = await fastify.listen({ host, port })
   console.log(`Server running at ${address}`)
 } catch (err) {
   fastify.log.error(err)

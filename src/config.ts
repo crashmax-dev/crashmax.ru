@@ -1,15 +1,6 @@
 declare module 'fastify' {
   interface FastifyInstance {
-    config: {
-      APP_PORT: number
-      APP_IP: string
-      DATABASE_URL: string
-      EMAIL_HOST: string
-      EMAIL_PORT: number
-      EMAIL_USER: string
-      EMAIL_PASS: string
-      EMAIL_TOKEN: string
-    }
+    config: NodeJS.ProcessEnv
   }
 }
 
@@ -24,13 +15,11 @@ export const envSchema = {
     'EMAIL_TOKEN'
   ],
   properties: {
-    APP_PORT: {
-      type: 'integer',
-      default: 8000
-    },
     APP_IP: {
-      type: 'string',
-      default: 'localhost'
+      type: 'string'
+    },
+    APP_PORT: {
+      type: 'integer'
     },
     DATABASE_URL: {
       type: 'string'
