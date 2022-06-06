@@ -34,15 +34,14 @@ export default fp(async (fastify) => {
 
   fastify.get('/', (request, reply) => {
     const now = Date.now()
-    const ip = request.headers['x-forwarded-for'] as string
 
-    for (const [key, timestamp] of sessions.entries()) {
-      if (timestamp + sessionLife > now) {
-        sessions.delete(key)
+    for (const [ip, timestamp] of sessions.entries()) {
+      if (timestamp + sessionLife < now) {
+        sessions.delete(ip)
       }
     }
 
-    sessions.set(ip, now)
+    sessions.set(request.ip, now)
     reply.sendFile('/index.html')
   })
 })

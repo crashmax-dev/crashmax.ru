@@ -8,6 +8,7 @@ import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
 
 export function buildServer() {
   const fastify = Fastify({
+    trustProxy: true,
     logger: {
       enabled: process.env.NODE_ENV === 'development',
       transport: {
