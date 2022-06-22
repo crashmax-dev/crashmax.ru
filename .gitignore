@@ -1,4 +1,6 @@
 **/dist
 **/node_modules
+**/.parcel-cache
 .env
 .nyc_output
+.pnpm-debug.log

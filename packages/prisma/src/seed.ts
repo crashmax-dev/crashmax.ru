@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client'
-import type { Prisma } from '@prisma/client'
+import { PrismaClient } from './index.js'
+import type { Prisma } from './index.js'
 
 const links: Prisma.LinksCreateInput[] = [
   {

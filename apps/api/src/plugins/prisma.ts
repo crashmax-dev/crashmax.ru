@@ -1,5 +1,5 @@
 import fp from 'fastify-plugin'
-import { PrismaClient } from '@prisma/client'
+import { PrismaClient } from '@crashmax/prisma'
 
 declare module 'fastify' {
   interface FastifyInstance {

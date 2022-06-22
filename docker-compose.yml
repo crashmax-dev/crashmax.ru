@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 
 services:
   postgres:
@@ -7,8 +7,8 @@ services:
     volumes:
       - pg-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
+      POSTGRES_USER: crashmax
+      POSTGRES_PASSWORD: crashmax
       POSTGRES_DB: crashmax
     ports:
       - 5432:5432

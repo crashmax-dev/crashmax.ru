@@ -1,0 +1,25 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/app.ts",
+    "build": "pnpm prebuild && tsc",
+    "test": "pnpm build && tap --node-arg=--loader=ts-node/esm --node-arg=--no-warnings",
+    "prebuild": "del-cli dist",
+    "prepack": "pnpm build"
+  },
+  "dependencies": {
+    "@crashmax/prisma": "workspace:*",
+    "@fastify/autoload": "^5.0.0",
+    "@fastify/env": "^4.0.0",
+    "@fastify/sensible": "^5.1.0",
+    "@fastify/static": "^6.4.0",
+    "@fastify/type-provider-typebox": "^1.0.0",
+    "@sinclair/typebox": "^0.23.5",
+    "fastify": "^4.1.0",
+    "fastify-plugin": "^3.0.1",
+    "nodemailer": "^6.7.5",
+    "pino-pretty": "^8.1.0"
+  }
+}
