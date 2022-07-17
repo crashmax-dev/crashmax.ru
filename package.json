@@ -16,17 +16,14 @@
     "dev:apps": "pnpm -r --parallel --filter=./apps/* run dev",
     "build:apps": "pnpm -r --filter=./apps/* run build",
     "dev:packages": "pnpm -r --parallel --filter=./packages/* run dev",
-    "build:packages": "pnpm -r --filter=./packages/* run build",
-    "lint": "eslint --ext ts .",
-    "lint:fix": "eslint --fix --ext ts ."
+    "build:packages": "pnpm -r --filter=./packages/* run build"
   },
   "devDependencies": {
-    "@crashmax/eslint-config": "^1.1.0",
-    "@crashmax/prettier-config": "^1.1.0",
+    "@crashmax/prettier-config": "^1.1.1",
     "@crashmax/tsconfig": "^1.0.1",
     "del-cli": "^4.0.1",
     "husky": "^8.0.1",
-    "tsx": "^3.5.0",
+    "tsx": "^3.8.0",
     "typescript": "^4.7.4"
   },
   "engines": {
