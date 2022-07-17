@@ -7,7 +7,13 @@
     ".": "./dist/index.js"
   },
   "scripts": {
-    "prepare": "prisma generate && tsc"
+    "build": "tsc",
+    "seed": "prisma db seed",
+    "migrate": "prisma migrate dev",
+    "prepare": "prisma generate && pnpm build"
+  },
+  "prisma": {
+    "seed": "tsx src/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "^4.0.0"

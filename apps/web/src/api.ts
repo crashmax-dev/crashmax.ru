@@ -17,5 +17,5 @@ export interface ApiResponse {
 
 export async function fetchTerminal(): Promise<ApiResponse> {
   const response = await fetch('/api/terminal')
-  return await response.json() as ApiResponse
+  return (await response.json()) as ApiResponse
 }

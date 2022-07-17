@@ -1,6 +1,5 @@
 **/dist
 **/node_modules
-**/.parcel-cache
+*.log
 .env
-.nyc_output
-.pnpm-debug.log
+.DS_Store
