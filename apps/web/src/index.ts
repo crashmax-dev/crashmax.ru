@@ -1,7 +1,7 @@
 import { el } from 'redom'
 import { Matrix } from '@crashmax/canvas-matrix2d'
-import { currentTime, declOfNum, lifeDate } from './utils'
 import { fetchTerminal } from './api'
+import { currentTime, declOfNum, lifeDate } from './utils'
 
 const contacts = document.getElementById('contacts')!
 const life = document.getElementById('life')!
@@ -29,7 +29,14 @@ const state = {
 async function main() {
   const res = await fetchTerminal()
 
-  online.textContent = `${res.terminal.online} ${declOfNum(res.terminal.online, ['user', 'users', 'users'])}`
+  online.textContent = `${res.terminal.online} ${declOfNum(
+    res.terminal.online,
+    [
+      'user',
+      'users',
+      'users'
+    ]
+  )}`
   load.textContent = res.terminal.loadavg.join(', ')
   life.textContent = lifeDate()
 
@@ -38,10 +45,14 @@ async function main() {
       className: 'list_item'
     })
 
-    const link = el('a', {
-      href: contact.href,
-      target: '_blank'
-    }, contact.title)
+    const link = el(
+      'a',
+      {
+        href: contact.href,
+        target: '_blank'
+      },
+      contact.title
+    )
 
     const td = el('td', [
       el('div', {

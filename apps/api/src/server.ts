@@ -1,12 +1,12 @@
 import Fastify from 'fastify'
-import fastifyEnv from '@fastify/env'
 import fastifyAutoload from '@fastify/autoload'
-import { envSchema } from './config.js'
-import { joinPath } from './utils/path.js'
-import { ajvTypeBoxPlugin } from '@fastify/type-provider-typebox'
+import fastifyEnv from '@fastify/env'
 import type { TypeBoxTypeProvider } from '@fastify/type-provider-typebox'
+import { envSchema } from './config.js'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-export function buildServer() {
+export async function buildServer() {
   const fastify = Fastify({
     trustProxy: true,
     logger: {
@@ -19,25 +19,27 @@ export function buildServer() {
           colorize: true
         }
       }
-    },
-    ajv: {
-      plugins: [ajvTypeBoxPlugin]
     }
   }).withTypeProvider<TypeBoxTypeProvider>()
 
-  fastify.register(fastifyEnv, {
+  const filePath = (...paths: string[]) => resolve(
+    dirname(fileURLToPath(import.meta.url)),
+    ...paths
+  )
+
+  await fastify.register(fastifyEnv, {
     schema: envSchema,
     dotenv: {
-      path: joinPath(import.meta, '../.env')
+      path: filePath('..', '.env')
     }
   })
 
-  fastify.register(fastifyAutoload, {
-    dir: joinPath(import.meta, 'plugins')
+  await fastify.register(fastifyAutoload, {
+    dir: filePath('plugins')
   })
 
-  fastify.register(fastifyAutoload, {
-    dir: joinPath(import.meta, 'routes')
+  await fastify.register(fastifyAutoload, {
+    dir: filePath('routes')
   })
 
   return fastify

@@ -1,6 +1,6 @@
 import { buildServer } from './server.js'
 
-const fastify = buildServer()
+const fastify = await buildServer()
 
 try {
   const host = process.env.APP_IP ?? 'localhost'

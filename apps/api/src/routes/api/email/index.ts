@@ -1,7 +1,7 @@
+import type { FastifyPluginAsync, RouteShorthandOptions } from 'fastify'
 import { createTransport } from 'nodemailer'
 import { Type } from '@sinclair/typebox'
 import type { Static } from '@sinclair/typebox'
-import type { FastifyPluginAsync, RouteShorthandOptions } from 'fastify'
 
 const body = Type.Object({
   to: Type.String({ format: 'email' }),

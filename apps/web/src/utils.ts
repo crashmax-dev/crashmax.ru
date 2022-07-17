@@ -23,16 +23,36 @@ export function currentTime() {
 
 export function lifeDate() {
   const startDate = new Date('December 19, 2015')
-  const nowDate = new Date
-  const days = Math.round((nowDate.getTime() - startDate.getTime()) / 8_640_000_0)
+  const nowDate = new Date()
+  const days = Math.round(
+    (nowDate.getTime() - startDate.getTime()) / 8_640_000_0
+  )
 
-  return (days > 0 ? days + ' ' + declOfNum(days, ['day', 'days', 'days']) + '' : '')
+  return days > 0
+    ? days +
+        ' ' +
+        declOfNum(days, [
+          'day',
+          'days',
+          'days'
+        ]) +
+        ''
+    : ''
 }
 
 export const declOfNum = (number: number, titles: string[]): string => {
-  const cases = [2, 0, 1, 1, 1, 2]
+  const cases = [
+    2,
+    0,
+    1,
+    1,
+    1,
+    2
+  ]
 
-  return titles[(number % 100 > 4 && number % 100 < 20)
-    ? 2
-    : cases[(number % 10 < 5) ? number % 10 : 5]]
+  return titles[
+    number % 100 > 4 && number % 100 < 20
+      ? 2
+      : cases[number % 10 < 5 ? number % 10 : 5]
+  ]
 }

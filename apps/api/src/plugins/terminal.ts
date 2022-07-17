@@ -1,5 +1,5 @@
-import os from 'node:os'
 import fp from 'fastify-plugin'
+import os from 'node:os'
 
 declare module 'fastify' {
   interface FastifyReply {
